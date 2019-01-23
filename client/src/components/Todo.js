@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import Task from './Task'
+import 'whatwg-fetch'
 
 class Todo extends React.Component{
   constructor(props){
@@ -10,6 +11,20 @@ class Todo extends React.Component{
       redirectTo: false
     }
     this.handleAdd = this.handleAdd.bind(this)
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:8000/tasks', {
+      method:'GET',
+    })
+    .then(res => {
+      if(res.status === 200){
+        console.log(res)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   handleAdd = () => {

@@ -10,10 +10,15 @@ class App extends Component {
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12">
               <Todo/>
+              <hr/>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-12">
               <Week/>
+              <hr/>
             </div>
+          </div>
+          <div className="row">
+            TimeTable
           </div>
         </div>
       </div>

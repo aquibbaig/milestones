@@ -1,5 +1,6 @@
 import React from 'react'
 import Task from './Task'
+import axios from 'axios'
 
 class Week extends React.Component{
   constructor(props){
@@ -10,6 +11,10 @@ class Week extends React.Component{
     }
     this.handleAdd = this.handleAdd.bind(this)
   }
+
+  // componentDidMount(){
+  //
+  // }
 
   handleAdd = () => {
     this.setState({
