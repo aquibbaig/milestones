@@ -10,14 +10,6 @@ class AddTask extends React.Component{
       redirectTo:true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.goBack = this.goBack.bind(this)
-  }
-
-  goBack = () => {
-    this.setState({
-      redirectTo:false
-    })
-    this.props.redirected(this.state.redirectTo)
   }
 
   handleSubmit = (e) => {
@@ -51,13 +43,13 @@ class AddTask extends React.Component{
   render(){
     return(
       <div>
+        <Button href="/" style={{textDecoration:'none'}}>X</Button>
         <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <input type = "text" onChange={this.handleChange}/>
         </Form.Field>
         <Button type='submit'>Submit</Button>
         </Form>
-        <Button onClick={this.goBack}>Back</Button>
       </div>
     )
   }

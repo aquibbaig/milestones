@@ -65,6 +65,18 @@ app.get('/tasks', (req, res) => {
   })
 })
 
+app.delete('/task/delete/:id', (req, res) => {
+  const id = req.params.id
+  taskModel.deleteOne({_id:id}, function(err, result){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

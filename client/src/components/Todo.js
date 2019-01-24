@@ -1,6 +1,7 @@
 import React from 'react'
 import AddTask from './AddTask'
 import 'whatwg-fetch'
+import { Button } from 'semantic-ui-react'
 
 class Todo extends React.Component{
   constructor(props){
@@ -11,11 +12,26 @@ class Todo extends React.Component{
     }
     this.handleAdd = this.handleAdd.bind(this)
     this.updateRedirected = this.updateRedirected.bind(this)
+    this.deleteTask = this.deleteTask.bind(this)
   }
 
   updateRedirected = (redirected) => {
     this.setState({
       redirectTo:redirected
+    })
+  }
+
+  deleteTask = (what) => {
+    console.log(what)
+    fetch(`http://localhost:8000/task/delete/${what}`,{
+      method:'DELETE',
+    })
+    .then(res => {
+      console.log(res)
+      window.location.reload()
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
 
@@ -60,6 +76,9 @@ class Todo extends React.Component{
             todo.map(task => (
               <li key={task._id}>
               {task.name}
+              <span>
+                <Button onClick={() => this.deleteTask(task._id)}>Delete</Button>
+              </span>
               </li>
             ))
             ))}
