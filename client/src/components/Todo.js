@@ -22,12 +22,12 @@ class Todo extends React.Component{
   }
 
   deleteTask = (what) => {
-    console.log(what)
+    // console.log(what)
     fetch(`http://localhost:8000/task/delete/${what}`,{
       method:'DELETE',
     })
     .then(res => {
-      console.log(res)
+      // console.log(res)
       window.location.reload()
     })
     .catch(err => {
@@ -50,7 +50,7 @@ class Todo extends React.Component{
           todos: [...this.state.todos, data]
         })
       }
-      console.log(this.state.todos)
+      // console.log(this.state.todos)
     })
     .catch(err => {
       console.log(err)
@@ -69,15 +69,15 @@ class Todo extends React.Component{
       return(
         <div>
           <div className="row">
-            <button style={{float:'right'}} className="btn btn-primary" onClick={this.handleAdd}>Add</button>
+            <h1>TODOS</h1><button style={{float:'right'}} className="btn" style={{backgroundColor:'white', color:'black', fontSize:'24px',}} onClick={this.handleAdd}>+</button>
           </div>
           <div>
           {this.state.todos.map(todo => (
             todo.map(task => (
-              <li key={task._id}>
+              <li key={task._id} style={{listStyle:'none'}}>
               {task.name}
               <span>
-                <Button onClick={() => this.deleteTask(task._id)}>Delete</Button>
+                <Button onClick={() => this.deleteTask(task._id)}> <i>delete</i></Button>
               </span>
               </li>
             ))

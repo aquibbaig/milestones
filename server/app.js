@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var taskModel = require('./models/task')
+var milestoneModel = require('./models/milestone')
 var cors = require('cors')
 
 var index = require('./routes/index');
@@ -68,6 +69,44 @@ app.get('/tasks', (req, res) => {
 app.delete('/task/delete/:id', (req, res) => {
   const id = req.params.id
   taskModel.deleteOne({_id:id}, function(err, result){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
+})
+
+//milestone routes
+app.post('/milestone/new', (req, res) => {
+  var milestone = new milestoneModel({
+    name: req.body.milestone
+  })
+  milestone.save()
+  .then((err, result) => {
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(JSON.stringify(result))
+    }
+  })
+})
+
+app.get('/milestones', (req,res) => {
+  milestoneModel.find({}, function(err, result){
+    if(err){
+      res.json(err)
+    }
+    else{
+      res.send(JSON.stringify(result))
+    }
+  })
+})
+
+app.delete('/milestones/delete', (req,res) => {
+  milestoneModel.deleteMany({}, function(err, result){
     if(err){
       console.log(err)
     }
