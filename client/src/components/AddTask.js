@@ -1,14 +1,23 @@
 import React from 'react'
-import { Button, Form, Select, TextArea } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import 'whatwg-fetch'
 
-class Task extends React.Component{
+class AddTask extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      task:''
+      task:'',
+      redirectTo:true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.goBack = this.goBack.bind(this)
+  }
+
+  goBack = () => {
+    this.setState({
+      redirectTo:false
+    })
+    this.props.redirected(this.state.redirectTo)
   }
 
   handleSubmit = (e) => {
@@ -48,9 +57,10 @@ class Task extends React.Component{
         </Form.Field>
         <Button type='submit'>Submit</Button>
         </Form>
+        <Button onClick={this.goBack}>Back</Button>
       </div>
     )
   }
 }
 
-export default Task
+export default AddTask

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button } from 'semantic-ui-react'
-import Task from './Task'
+import AddTask from './AddTask'
 import 'whatwg-fetch'
 
 class Todo extends React.Component{
@@ -11,6 +10,13 @@ class Todo extends React.Component{
       redirectTo: false
     }
     this.handleAdd = this.handleAdd.bind(this)
+    this.updateRedirected = this.updateRedirected.bind(this)
+  }
+
+  updateRedirected = (redirected) => {
+    this.setState({
+      redirectTo:redirected
+    })
   }
 
   componentDidMount(){
@@ -19,8 +25,16 @@ class Todo extends React.Component{
     })
     .then(res => {
       if(res.status === 200){
-        console.log(res)
+        return res.json()
       }
+    })
+    .then((data) => {
+      if(data){
+        this.setState({
+          todos: [...this.state.todos, data]
+        })
+      }
+      console.log(this.state.todos)
     })
     .catch(err => {
       console.log(err)
@@ -41,13 +55,22 @@ class Todo extends React.Component{
           <div className="row">
             <button style={{float:'right'}} className="btn btn-primary" onClick={this.handleAdd}>Add</button>
           </div>
-        </div>
+          <div>
+          {this.state.todos.map(todo => (
+            todo.map(task => (
+              <li key={task._id}>
+              {task.name}
+              </li>
+            ))
+            ))}
+            </div>
+          </div>
       )
     }
     else{
       return(
         <div>
-          <Task/>
+          <AddTask redirected={this.updateRedirected}/>
         </div>
       )
     }

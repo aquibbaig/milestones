@@ -1,6 +1,5 @@
 import React from 'react'
-import Task from './Task'
-import axios from 'axios'
+import AddMilestone from './AddMilestone'
 
 class Week extends React.Component{
   constructor(props){
@@ -36,7 +35,7 @@ class Week extends React.Component{
     else{
       return(
         <div>
-          <Task/>
+          <AddMilestone/>
         </div>
       )
     }
