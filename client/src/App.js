@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './components/Todo'
 import Week from './components/Week'
+import TimeTable from './components/TimeTable'
 
 class App extends Component {
   render() {
@@ -11,14 +12,13 @@ class App extends Component {
             <div className="col-lg-6 col-md-6 col-sm-12">
               <Todo/>
               <hr/>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-12">
               <Week/>
               <hr/>
             </div>
-          </div>
-          <div className="row">
-            TimeTable
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <TimeTable/>
+              <hr/>
+            </div>
           </div>
         </div>
       </div>

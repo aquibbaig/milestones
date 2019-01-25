@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var taskModel = require('./models/task')
 var milestoneModel = require('./models/milestone')
+var weekListModel = require('./models/weekList')
 var cors = require('cors')
 
 var index = require('./routes/index');
@@ -113,6 +114,26 @@ app.delete('/milestones/delete', (req,res) => {
     else{
       res.send(result)
     }
+  })
+})
+
+//timetable routes
+app.post('/new/timetable', (req, res) => {
+  var weekList = new weekListModel({
+    mon:req.body.mon,
+    tue:req.body.tue,
+    wed:req.body.wed,
+    thu:req.body.thu,
+    fri:req.body.fri,
+    sat:req.body.sat,
+    sun:req.body.sun
+  })
+  weekList.save()
+  .then(result => {
+      res.send(result)
+  })
+  .catch(err => {
+    console.log(err)
   })
 })
 
