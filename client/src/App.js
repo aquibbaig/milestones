@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Todo from './components/Todo'
 import Week from './components/Week'
 import TimeTable from './components/TimeTable'
+import Pomodoro from './components/Pomodoro'
 
 class App extends Component {
   render() {
@@ -20,6 +21,9 @@ class App extends Component {
               <hr/>
             </div>
           </div>
+        </div>
+        <div className="container-fluid">
+          <Pomodoro/>
         </div>
       </div>
     );
