@@ -137,6 +137,27 @@ app.post('/new/timetable', (req, res) => {
   })
 })
 
+app.get('/timetable', (req, res) => {
+  weekListModel.find({}, function(err, result){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
+})
+
+app.delete('/deleteTable', (req,res) => {
+  weekListModel.deleteMany({}, function(err, result){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

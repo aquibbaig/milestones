@@ -17,13 +17,48 @@ class TimeTable extends React.Component{
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    const date = new Date()
-    console.log(date.getDay())
+    this.clearTable = this.clearTable.bind(this)
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value
+    })
+  }
+
+  clearTable = (e) => {
+    fetch('http://localhost:8000/deleteTable', {
+      method:'DELETE'
+    })
+    .then(res => {
+      console.log(res)
+      window.location.reload()
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:8000/timetable', {
+      method:'GET'
+    })
+    .then(res => {
+      return res.json()
+    })
+    .then(data => {
+      if(data.length === 1){
+        this.setState({
+          created:true,
+          workList:data[0]
+        })
+        const date = (new Date()).getDay()
+        document.getElementById(date).style.backgroundColor = 'green'
+      }
+      console.log(this.state.workList)
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
 
@@ -47,13 +82,22 @@ class TimeTable extends React.Component{
     .then(res => {
       if((res).status === 200){
         console.log('TimeTable Added')
-        this.setState({
-          created:true
-        })
+        return res.json()
+      }
+      else if((res).status === 400){
+        window.alert("TimeTable already exists")
       }
       else{
         console.log('TimeTable not added')
       }
+    })
+    .then((data) => {
+      this.setState({
+        workList: [...this.state.workList, data],
+        created:true
+      })
+      window.location.reload()
+      console.log(this.state)
     })
     .catch(err => {
       console.log(err)
@@ -96,7 +140,47 @@ class TimeTable extends React.Component{
     }
     else{
       return(
-        <div>created</div>
+        <div>
+          <table style={{textAlign:'left', border:'2px solid black', borderCollapse:'collapse'}}>
+            <thead>
+            <tr>
+              <th>Day</th>
+              <th>WorkList</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="1">
+              <td style={{backgroundColor:'#A4ACB9'}}>Monday</td>
+              <td>{(this.state.workList)['mon']}</td>
+            </tr>
+            <tr id="2">
+              <td style={{backgroundColor:'#A4ACB9'}}>Tuesday</td>
+              <td>{(this.state.workList)['tue']}</td>
+            </tr>
+            <tr id="3">
+              <td style={{backgroundColor:'#A4ACB9'}}>Wednesday</td>
+              <td>{(this.state.workList)['wed']}</td>
+            </tr>
+            <tr id="4">
+              <td style={{backgroundColor:'#A4ACB9'}}>Thursday</td>
+              <td>{(this.state.workList)['thu']}</td>
+            </tr>
+            <tr id="5">
+              <td style={{backgroundColor:'#A4ACB9'}}>Friday</td>
+              <td>{(this.state.workList)['fri']}</td>
+            </tr>
+            <tr id="6">
+              <td style={{backgroundColor:'#A4ACB9'}}>Monday</td>
+              <td>{(this.state.workList)['sat']}</td>
+            </tr>
+            <tr id="0">
+              <td style={{backgroundColor:'#A4ACB9'}}>Sunday</td>
+              <td>{(this.state.workList)['sun']}</td>
+            </tr>
+            </tbody>
+          </table>
+          <Button onClick={this.clearTable} style={{backgroundColor:'white', color:'black', fontSize:'24px',}}><i>Recreate</i></Button><br/>
+        </div>
       )
     }
   }
